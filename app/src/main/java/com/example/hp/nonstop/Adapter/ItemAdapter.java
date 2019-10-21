@@ -18,66 +18,56 @@ import com.example.hp.nonstop.R;
 
 import java.util.List;
 
+import retrofit2.Callback;
+
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
-    List<Example> examples;
-    int rowLayout;
+    List<Example> paths;
     Context context;
 
+//    public ItemAdapter(Context context, List<Example> paths) {
+//        this.context = context;
+//        this.paths= paths;
+//    }
+
+    public ItemAdapter(List<Example> paths, Context applicationContext) {
+
+        this.context = context;
+        this.paths = paths;
+    }
+
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout itemLayout;
         RecyclerView recyclerView;
         TextView tittle_main;
-        TextView tittle_sub;
-        TextView sub;
+
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-//            itemLayout = (LinearLayout) itemView.findViewById(R.id.item_layout);
-           recyclerView = (RecyclerView)itemView.findViewById(R.id.recycler_main);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_first);
             tittle_main = (TextView) itemView.findViewById(R.id.tittle_main);
-//            tittle_sub = (TextView) itemView.findViewById(R.id.tittle_sub);
-//            sub = (TextView) itemView.findViewById(R.id.sub);
         }
     }
 
-    public ItemAdapter(List<Example> examples, int rowLayout, Context context) {
-        this.examples = examples;
-        this.rowLayout = rowLayout;
-        this.context = context;
-    }
-
-
     @Override
-    public ItemViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
+    public ItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_items, null);
         return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
-        List singleSectionItems = examples.get(i).getSubPaths();
+        List singleSectionItems = paths.get(i).getSubPaths();
 
         SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(context, singleSectionItems);
         itemViewHolder.recyclerView.setHasFixedSize(true);
-        itemViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-        if (examples.get(i).getTitle() != null) {
-            itemViewHolder.tittle_main.setText(examples.get(i).getTitle());
-        }
+        itemViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        itemViewHolder.tittle_main.setText(paths.get(i).getTitle());
         itemViewHolder.recyclerView.setAdapter(itemListDataAdapter);
-        if (examples.get(i).getSubPaths() != null){
-            Log.e("Subpath","Present");
-//            itemViewHolder.tittle_sub.setText(examples.get(i).getSubPaths().get(i).getTitle());
-            //itemViewHolder.sub.setText(examples.get(i).getSubPaths().get(i).getTitle());
+        if (paths.get(i).getSubPaths() != null) {
+            Log.e("Subpath", "Present");
         }
-//        itemViewHolder.tittle_sub.setText(examples.get(i).getSubPaths().get(i).getTitle());
-
-     //       itemViewHolder.tittle_sub.setText(examples.get(i).getSubPaths().get(i).getId());
-
-
     }
-
 
     @Override
     public int getItemCount() {
-        return examples.size();
+        return paths.size();
     }
 }
