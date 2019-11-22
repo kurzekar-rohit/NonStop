@@ -24,16 +24,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     List<Example> paths;
     Context context;
 
-//    public ItemAdapter(Context context, List<Example> paths) {
-//        this.context = context;
-//        this.paths= paths;
-//    }
-
-    public ItemAdapter(List<Example> paths, Context applicationContext) {
-
+    public ItemAdapter(Context context, List<Example> paths) {
         this.context = context;
-        this.paths = paths;
+        this.paths= paths;
     }
+
+//    public ItemAdapter(List<Example> paths, Context applicationContext) {
+//
+//        this.context = context;
+//        this.paths = paths;
+//    }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         RecyclerView recyclerView;

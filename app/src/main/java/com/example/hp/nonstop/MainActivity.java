@@ -23,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://5d55541936ad770014ccdf2d.mockapi.io/api/v1/";
-    // List<SubPath> subPaths;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -31,27 +30,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_main);
-        recyclerView.setHasFixedSize(true);   //
 
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         ApiInterface api = retrofit.create(ApiInterface.class);
         Call<List<Example>> call = api.getExample();
-        Log.e(TAG, "OK");
+
         call.enqueue(new Callback<List<Example>>() {
             @Override
             public void onResponse(Call<List<Example>> call, Response<List<Example>> response) {
-                // subPaths = response.body().getSubPaths();
                 List<Example> Paths = response.body();
-
-                recyclerView.setAdapter(new ItemAdapter(Paths, R.layout.list_items, getApplicationContext()));
+                recyclerView.setAdapter(new ItemAdapter(getApplicationContext(), Paths));
                 Log.d(TAG, "Number of event received: " + Paths.size());
             }
-
             @Override
             public void onFailure(Call<List<Example>> call, Throwable t) {
 
